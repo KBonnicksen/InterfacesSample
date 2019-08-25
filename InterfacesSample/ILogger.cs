@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,17 @@ namespace InterfacesSample
     public interface ILogger
     {
         void WriteData(string data);
+    }
+
+    class FileLogger : ILogger
+    {
+        void ILogger.WriteData(string data)
+        {
+            string nl = Environment.NewLine;
+
+            File.AppendAllText("log.txt", 
+                DateTime.Now.ToString() + nl + data + nl + nl);
+        }
     }
 
     class WinFormsLogger : ILogger
