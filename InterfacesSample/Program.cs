@@ -27,7 +27,7 @@ namespace InterfacesSample
 
         /// <summary>
         /// Configure Dependency Injection Container.
-        /// Registers all types and forms that need to be instantiated
+        /// Registers all types and forms that need to be instantiated.
         /// </summary>
         private static void ConfigureDIContainer()
         {
