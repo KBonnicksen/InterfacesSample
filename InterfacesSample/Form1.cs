@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -20,24 +21,53 @@ namespace InterfacesSample
             InitializeComponent();
         }
 
+        class Roster : IEnumerable<Student>
+        {
+            public List<Student> Students { get; set; }
+
+            public IEnumerator<Student> GetEnumerator()
+            {
+                throw new NotImplementedException();
+            }
+
+            IEnumerator IEnumerable.GetEnumerator()
+            {
+                throw new NotImplementedException();
+            }
+        }
+        /// <summary>
+        /// This is a documentation comment
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Form1_Load(object sender, EventArgs e)
         {
+            using(var u = new UnmanagedExample())
+            {
+                Roster stuRoster = new Roster();
+                //List<Student> getStus = stuRoster.Students();
+                foreach(Student s in stuRoster)
+                {
+
+                }
+            }
+
             Student s1 = new Student(){
                 StudentID = 1,
-                FirstName = Kelsey,
-                LastName = Bonnicksen
+                FirstName = "Kelsey",
+                LastName = "Bonnicksen"
             };
 
             Student s2 = new Student(){
                 StudentID = 2,
-                FirstName = Jim,
-                LastName = Halpert
+                FirstName = "Jim",
+                LastName = "Halpert"
             };
 
             Student s3 = new Student(){
                 StudentID = 3,
-                FirstName = Drew,
-                LastName = Carrey
+                FirstName ="Drew",
+                LastName = "Carrey"
             };
 
             // Sorting by lastname due to IComparable
@@ -67,19 +97,16 @@ namespace InterfacesSample
         public int CompareTo(Student other)
         {
             Student currStu = this;
-
-            // This instance comes after null because nulls fo first
-
             return currStu.StudentID.CompareTo(other.StudentID);
-            if(other == null)
-                return 1;
+        }
+    }
 
-            if(currStu.StudentID < other.StudentID)
-                return -1;
-            if(currStu.StudentID == other.StudentID)
-                return 0;
-            if(currStu.StudentID > other.StudentID)
-                return 1;
+    class UnmanagedExample : IDisposable
+    {
+        public void Dispose()
+        {
+            // Clean up unmanaged resources
+            // such as DB connections
         }
     }
 }
